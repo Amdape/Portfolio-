@@ -1,0 +1,832 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Amao Daniel Pelumi — Data Analyst & Data Scientist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ─────────────────────────────────────
+   TOKENS
+───────────────────────────────────── */
+:root {
+  --bg:        #0b0d10;
+  --surface:   #111418;
+  --surface2:  #181c22;
+  --border:    #1e2329;
+  --border2:   #252b34;
+  --text:      #e8eaf0;
+  --muted:     #6b7585;
+  --accent:    #4f8ef7;
+  --accent2:   #7eb3ff;
+  --green:     #22c55e;
+  --amber:     #f59e0b;
+  --tag-bg:    #151a22;
+  --tag-border:#1f2733;
+  --card:      #0f1217;
+}
+
+/* ─────────────────────────────────────
+   RESET & BASE
+───────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  font-weight:400;
+  line-height:1.65;
+  overflow-x:hidden;
+}
+::selection{background:rgba(79,142,247,.25);color:var(--text)}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+a{color:inherit;text-decoration:none}
+
+/* ─────────────────────────────────────
+   NOISE GRAIN OVERLAY
+───────────────────────────────────── */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  pointer-events:none;z-index:999;
+  opacity:.028;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+
+/* ─────────────────────────────────────
+   NAV
+───────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 3rem;
+  background:rgba(11,13,16,.7);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  transition:background .3s;
+}
+.nav-logo{
+  font-family:'DM Serif Display',serif;
+  font-size:1.15rem;letter-spacing:.01em;
+  color:var(--text);
+}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{
+  font-size:.78rem;font-weight:500;letter-spacing:.06em;
+  color:var(--muted);transition:color .2s;
+}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{
+  font-size:.75rem;font-weight:600;letter-spacing:.08em;
+  color:var(--accent);border:1px solid rgba(79,142,247,.4);
+  padding:.45rem 1.1rem;border-radius:4px;
+  transition:all .2s;
+}
+.nav-cta:hover{background:rgba(79,142,247,.12);border-color:var(--accent)}
+
+/* ─────────────────────────────────────
+   HERO
+───────────────────────────────────── */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:8rem 3rem 5rem;
+  position:relative;overflow:hidden;
+}
+/* background glow blobs */
+.hero-blob{
+  position:absolute;border-radius:50%;
+  filter:blur(90px);pointer-events:none;opacity:.12;
+}
+.hero-blob-1{
+  width:520px;height:520px;
+  background:radial-gradient(circle,var(--accent),transparent 70%);
+  top:-100px;right:-80px;
+}
+.hero-blob-2{
+  width:380px;height:380px;
+  background:radial-gradient(circle,#7b4ff7,transparent 70%);
+  bottom:60px;left:-60px;
+}
+/* dotted grid */
+#hero::before{
+  content:'';
+  position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(rgba(79,142,247,.12) 1px,transparent 1px);
+  background-size:32px 32px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,#000 40%,transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,#000 40%,transparent 100%);
+}
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:.55rem;
+  font-size:.72rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1.5rem;
+}
+.hero-kicker-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--accent);
+  animation:blink 2s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-headline{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(2.8rem,6vw,5.2rem);
+  line-height:1.08;letter-spacing:-.02em;
+  color:var(--text);
+  margin-bottom:1.5rem;
+  max-width:820px;
+}
+.hero-headline .hl{
+  color:transparent;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;background-clip:text;
+}
+.hero-sub{
+  font-size:1rem;font-weight:300;color:var(--muted);
+  max-width:580px;line-height:1.8;margin-bottom:2.5rem;
+}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:4rem}
+.btn-primary{
+  background:var(--accent);color:#fff;
+  padding:.75rem 1.8rem;border-radius:6px;
+  font-weight:600;font-size:.85rem;letter-spacing:.04em;
+  border:1px solid var(--accent);transition:all .25s;
+}
+.btn-primary:hover{background:#3a7de8;box-shadow:0 0 24px rgba(79,142,247,.35)}
+.btn-secondary{
+  background:transparent;color:var(--text);
+  padding:.75rem 1.8rem;border-radius:6px;
+  font-weight:500;font-size:.85rem;letter-spacing:.04em;
+  border:1px solid var(--border2);transition:all .25s;
+}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+
+/* stat pills */
+.hero-stats{
+  display:flex;gap:1.5rem;flex-wrap:wrap;
+}
+.stat-pill{
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:8px;
+  padding:1.2rem 1.8rem;
+  text-align:center;
+  min-width:110px;
+}
+.stat-pill-val{
+  font-family:'DM Serif Display',serif;
+  font-size:1.9rem;line-height:1;
+  color:var(--accent);
+  margin-bottom:.25rem;
+}
+.stat-pill-label{
+  font-size:.65rem;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);
+}
+
+/* ─────────────────────────────────────
+   SECTION WRAPPER
+───────────────────────────────────── */
+.section{padding:6rem 3rem;border-top:1px solid var(--border)}
+.section-num{
+  font-size:.7rem;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--accent);
+  display:flex;align-items:center;gap:.6rem;
+  margin-bottom:1.25rem;
+}
+.section-num::after{
+  content:'';flex:1;height:1px;background:var(--border2);max-width:48px;
+}
+.section-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(1.8rem,3.5vw,2.8rem);
+  letter-spacing:-.02em;line-height:1.1;
+  color:var(--text);margin-bottom:3rem;
+}
+
+/* ─────────────────────────────────────
+   ABOUT
+───────────────────────────────────── */
+.about-grid{
+  display:grid;grid-template-columns:1.3fr 1fr;
+  gap:4rem;align-items:start;
+}
+.about-body{
+  font-size:.95rem;line-height:1.85;color:var(--muted);
+}
+.about-body p+p{margin-top:1.1rem}
+.about-body strong{color:var(--text);font-weight:500}
+
+.skills-panel{
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:10px;
+  padding:1.75rem;
+}
+.skills-panel-title{
+  font-size:.68rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);
+  margin-bottom:1.25rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.skills-panel-title::before{
+  content:'';width:3px;height:12px;background:var(--accent);border-radius:2px;
+}
+.skills-cloud{display:flex;flex-wrap:wrap;gap:.5rem}
+.skill-chip{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;
+  background:var(--tag-bg);
+  border:1px solid var(--tag-border);
+  color:var(--muted);
+  padding:.3rem .75rem;border-radius:4px;
+  transition:all .2s;
+}
+.skill-chip:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ─────────────────────────────────────
+   PROJECTS
+───────────────────────────────────── */
+.projects-stack{
+  display:flex;flex-direction:column;gap:1.5rem;
+}
+.project-card{
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:12px;
+  overflow:hidden;
+  transition:border-color .25s,transform .25s,box-shadow .25s;
+}
+.project-card:hover{
+  border-color:rgba(79,142,247,.4);
+  transform:translateY(-2px);
+  box-shadow:0 16px 48px rgba(0,0,0,.4);
+}
+.project-card-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.5rem 2rem 0;
+}
+.project-badge{
+  font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  padding:.3rem .75rem;border-radius:20px;
+  border:1px solid;
+}
+.badge-stat{font-size:.72rem;font-weight:600;font-family:'JetBrains Mono',monospace}
+
+/* colour variants */
+.pb-blue{color:var(--accent);border-color:rgba(79,142,247,.35);background:rgba(79,142,247,.07)}
+.pb-green{color:var(--green);border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.07)}
+.pb-amber{color:var(--amber);border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.07)}
+.pb-purple{color:#b77fff;border-color:rgba(183,127,255,.35);background:rgba(183,127,255,.07)}
+
+.project-emoji{
+  font-size:2.2rem;
+  padding:1.5rem 2rem 0;
+  display:block;
+}
+.project-meta{
+  font-size:.7rem;font-weight:500;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);
+  padding:.75rem 2rem 0;
+}
+.project-title{
+  font-family:'DM Serif Display',serif;
+  font-size:1.45rem;letter-spacing:-.01em;line-height:1.25;
+  color:var(--text);padding:.6rem 2rem 0;
+}
+.project-problem{
+  font-size:.88rem;line-height:1.8;color:var(--muted);
+  padding:.9rem 2rem 0;
+}
+.project-tags{
+  display:flex;flex-wrap:wrap;gap:.45rem;
+  padding:1.25rem 2rem 0;
+}
+.project-tag{
+  font-family:'JetBrains Mono',monospace;font-size:.68rem;
+  background:var(--tag-bg);border:1px solid var(--tag-border);
+  color:var(--muted);padding:.25rem .65rem;border-radius:4px;
+}
+.project-links{
+  display:flex;gap:1rem;padding:1.5rem 2rem 2rem;
+  border-top:1px solid var(--border);
+  margin-top:1.5rem;
+}
+.project-link{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.78rem;font-weight:500;color:var(--accent);
+  transition:gap .2s;
+}
+.project-link:hover{gap:.65rem}
+.project-link svg{width:13px;height:13px;flex-shrink:0}
+.project-link-muted{color:var(--muted)}
+.project-link-muted:hover{color:var(--text)}
+
+/* ─────────────────────────────────────
+   CERTIFICATIONS
+───────────────────────────────────── */
+.certs-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:1rem;
+}
+.cert-card{
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:10px;
+  padding:1.5rem;
+  transition:border-color .2s,transform .2s;
+}
+.cert-card:hover{border-color:rgba(79,142,247,.35);transform:translateY(-2px)}
+.cert-icon{
+  font-size:1.8rem;margin-bottom:1rem;display:block;
+}
+.cert-name{
+  font-weight:600;font-size:.92rem;color:var(--text);margin-bottom:.25rem;
+}
+.cert-issuer{font-size:.78rem;color:var(--muted);margin-bottom:.75rem}
+.cert-status{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+}
+.status-done{color:var(--green)}
+.status-done::before{
+  content:'';width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;
+}
+.status-progress{color:var(--amber)}
+.status-progress::before{
+  content:'';width:6px;height:6px;border-radius:50%;background:var(--amber);flex-shrink:0;
+}
+
+/* ─────────────────────────────────────
+   CONTACT
+───────────────────────────────────── */
+#contact{background:var(--surface)}
+.contact-inner{
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;
+}
+.contact-left h2{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(1.8rem,3.5vw,2.8rem);
+  letter-spacing:-.02em;line-height:1.1;
+  color:var(--text);margin-bottom:1rem;
+}
+.contact-left p{font-size:.92rem;color:var(--muted);line-height:1.8;margin-bottom:2rem}
+.contact-email-link{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.88rem;color:var(--accent);font-weight:500;
+  border-bottom:1px solid rgba(79,142,247,.35);padding-bottom:2px;
+  transition:gap .2s;
+}
+.contact-email-link:hover{gap:.75rem}
+.contact-email-link svg{width:14px;height:14px}
+
+/* form */
+.contact-form{display:flex;flex-direction:column;gap:1rem}
+.form-group{display:flex;flex-direction:column;gap:.4rem}
+.form-label{font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.form-input,.form-textarea{
+  background:var(--bg);
+  border:1px solid var(--border2);
+  border-radius:6px;
+  padding:.75rem 1rem;
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  font-size:.88rem;
+  transition:border-color .2s,box-shadow .2s;
+  outline:none;
+  resize:none;
+}
+.form-input:focus,.form-textarea:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(79,142,247,.12);
+}
+.form-textarea{min-height:120px}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--muted);opacity:.6}
+.form-error{font-size:.72rem;color:#f87171;display:none}
+.form-error.show{display:block}
+.form-submit{
+  background:var(--accent);color:#fff;
+  padding:.8rem 1.8rem;border-radius:6px;
+  font-weight:600;font-size:.85rem;letter-spacing:.04em;
+  border:none;cursor:pointer;transition:all .25s;align-self:flex-start;
+}
+.form-submit:hover{background:#3a7de8;box-shadow:0 0 20px rgba(79,142,247,.3)}
+.form-submit:disabled{opacity:.6;cursor:not-allowed}
+.form-msg{
+  padding:.85rem 1rem;border-radius:6px;font-size:.85rem;font-weight:500;
+  display:none;margin-top:.5rem;
+}
+.form-msg.success{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:var(--green);display:block}
+.form-msg.error-msg{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);color:#f87171;display:block}
+
+/* ─────────────────────────────────────
+   FOOTER
+───────────────────────────────────── */
+footer{
+  border-top:1px solid var(--border);padding:1.75rem 3rem;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:.75rem;color:var(--muted);
+}
+footer a{color:var(--muted);transition:color .2s}
+footer a:hover{color:var(--accent)}
+
+/* ─────────────────────────────────────
+   SCROLL REVEAL
+───────────────────────────────────── */
+.reveal{
+  opacity:0;transform:translateY(28px);
+  transition:opacity .7s ease,transform .7s ease;
+}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.1s}
+.reveal-d2{transition-delay:.2s}
+.reveal-d3{transition-delay:.3s}
+
+/* ─────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────── */
+@media(max-width:1024px){
+  nav{padding:1.1rem 2rem}
+  #hero,.section{padding-left:2rem;padding-right:2rem}
+  .about-grid{grid-template-columns:1fr;gap:2.5rem}
+  .contact-inner{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .nav-links{display:none}
+  nav{padding:1rem 1.5rem}
+  #hero,.section{padding-left:1.5rem;padding-right:1.5rem}
+  .hero-stats{gap:1rem}
+  .stat-pill{min-width:90px;padding:1rem 1.25rem}
+  footer{flex-direction:column;gap:.5rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">Amao Daniel Pelumi<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get In Touch</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
+
+  <div class="hero-kicker">
+    <span class="hero-kicker-dot"></span>
+    Data Analyst &amp; Data Scientist · Lagos, Nigeria
+  </div>
+
+  <h1 class="hero-headline">
+    Extracting Insights<br>from <span class="hl">Complex Data</span>
+  </h1>
+
+  <p class="hero-sub">
+    I build end-to-end data solutions — from raw, messy datasets to polished dashboards and predictive models. Specialising in Excel analytics, Power BI reporting, and machine learning across public health, aviation, and behavioural datasets.
+  </p>
+
+  <div class="hero-btns">
+    <a href="#projects" class="btn-primary">View My Work</a>
+    <a href="#contact" class="btn-secondary">Get In Touch</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-pill">
+      <div class="stat-pill-val">4</div>
+      <div class="stat-pill-label">Projects</div>
+    </div>
+    <div class="stat-pill">
+      <div class="stat-pill-val">50K+</div>
+      <div class="stat-pill-label">Records Processed</div>
+    </div>
+    <div class="stat-pill">
+      <div class="stat-pill-val">200+</div>
+      <div class="stat-pill-label">Countries in Data</div>
+    </div>
+    <div class="stat-pill">
+      <div class="stat-pill-val">59%</div>
+      <div class="stat-pill-label">Best ML Accuracy</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section class="section" id="about">
+  <div class="section-num">01 — Profile</div>
+  <h2 class="section-title">About Me</h2>
+
+  <div class="about-grid">
+    <div class="about-body reveal">
+      <p>
+        I'm <strong>Amao Daniel Pelumi</strong>, a data analyst and emerging data scientist passionate about the full journey of data — from messy raw tables to clean, compelling insight. My toolkit spans Excel, Power BI, SQL, and Python, and I've applied it across genuinely diverse domains: public health, aviation safety, and behavioural science.
+      </p>
+      <p>
+        My approach is always evidence-first. I define research questions before touching the data, clean rigorously, and communicate findings through dashboards and reports that non-technical stakeholders can immediately act on. Whether building a multi-page Power BI report with narrative flow, engineering features for a machine learning classifier, or crafting pivot-table insights in Excel — the goal is always the same: <strong>clarity that enables decisions</strong>.
+      </p>
+      <p>
+        I completed my data analytics training at <strong>HIIT PLC</strong>, delivering both an Excel dashboard project and a Power BI report on global COVID-19 data. I then deepened my machine learning skills through the <strong>TS Academy Data Science Programme</strong>, where my group's capstone project — a Random Forest classifier on 50,000 smartphone usage records — was completed in March 2026.
+      </p>
+      <p>
+        I am currently seeking roles in <strong>data analytics, business intelligence, or data science</strong> where I can bring structured thinking, reproducible analysis, and clear storytelling to real business problems.
+      </p>
+    </div>
+
+    <div class="skills-panel reveal reveal-d1">
+      <div class="skills-panel-title">Technical Skills</div>
+      <div class="skills-cloud">
+        <span class="skill-chip">Microsoft Excel</span>
+        <span class="skill-chip">Power BI</span>
+        <span class="skill-chip">DAX</span>
+        <span class="skill-chip">SQL</span>
+        <span class="skill-chip">Python</span>
+        <span class="skill-chip">Pandas</span>
+        <span class="skill-chip">NumPy</span>
+        <span class="skill-chip">Scikit-learn</span>
+        <span class="skill-chip">Random Forest</span>
+        <span class="skill-chip">Matplotlib</span>
+        <span class="skill-chip">Seaborn</span>
+        <span class="skill-chip">Data Modelling</span>
+        <span class="skill-chip">Pivot Tables</span>
+        <span class="skill-chip">Feature Engineering</span>
+        <span class="skill-chip">Google Colab</span>
+        <span class="skill-chip">Git / GitHub</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROJECTS ══ -->
+<section class="section" id="projects">
+  <div class="section-num">02 — Work</div>
+  <h2 class="section-title">Selected Projects</h2>
+
+  <div class="projects-stack">
+
+    <!-- P1: Excel Air Crash -->
+    <div class="project-card reveal">
+      <div class="project-card-header">
+        <span class="project-badge pb-green">Excel Analytics · Dashboard</span>
+        <span class="badge-stat" style="color:var(--green)">SURVIVAL PEAK: 98.5%</span>
+      </div>
+      <span class="project-emoji">📊</span>
+      <div class="project-meta">Project — 01 · Individual · 100+ years of data</div>
+      <h3 class="project-title">Air Crash Excel Dashboard &amp; Analysis</h3>
+      <p class="project-problem">
+        A structured data analytics project built entirely in Microsoft Excel — from raw aviation crash records to a polished, interactive dashboard. The project answered 10 defined research questions using pivot tables and calculated fields: identifying Colombia as the highest-crash country, Avianca as the most incident-prone airline with 20 recorded crashes, Douglas as the leading aircraft manufacturer involved in incidents (67 crashes by manufacturer), and 1951 as the peak crash year. Survival rates were computed year-by-year, revealing 2010 as the year with the highest average survival rate at 98.5%. The deliverable was a fully designed Excel dashboard with dynamic charts, slicers, and stakeholder-ready findings.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">Microsoft Excel</span>
+        <span class="project-tag">Pivot Tables</span>
+        <span class="project-tag">Dashboard Design</span>
+        <span class="project-tag">Survival Analysis</span>
+        <span class="project-tag">Data Cleaning</span>
+        <span class="project-tag">Aviation Safety</span>
+      </div>
+      <div class="project-links">
+        <span class="project-link project-link-muted">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+          Excel Dashboard · Private File
+        </span>
+      </div>
+    </div>
+
+    <!-- P2: Python Air Crash -->
+    <div class="project-card reveal">
+      <div class="project-card-header">
+        <span class="project-badge pb-blue">Python Analysis · GitHub</span>
+        <span class="badge-stat" style="color:var(--accent)">4,009 FATALITIES LOGGED</span>
+      </div>
+      <span class="project-emoji">✈️</span>
+      <div class="project-meta">Project — 02 · Individual · 100+ years of aviation data</div>
+      <h3 class="project-title">Air Crash Data Analysis — Python</h3>
+      <p class="project-problem">
+        A Python-based deep dive into the historical aviation crash dataset, extending the Excel analysis with programmatic data wrangling, trend visualisation, and reproducible pipelines. The project explored crash frequency trends across a century of aviation history, fatality distributions by airline and aircraft type, regional crash concentrations, and year-on-year survival rate patterns. Hosted on GitHub, this version demonstrates the ability to transition from spreadsheet analysis to scripted, version-controlled data workflows — the same questions, answered with code.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">Pandas</span>
+        <span class="project-tag">Matplotlib</span>
+        <span class="project-tag">Data Wrangling</span>
+        <span class="project-tag">CSV Processing</span>
+        <span class="project-tag">GitHub</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/Amdape/aircrash" target="_blank" rel="noopener" class="project-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub Repo
+        </a>
+      </div>
+    </div>
+
+    <!-- P3: COVID Power BI -->
+    <div class="project-card reveal">
+      <div class="project-card-header">
+        <span class="project-badge pb-amber">Power BI · Data Modelling</span>
+        <span class="badge-stat" style="color:var(--amber)">200+ COUNTRIES · ~7M DEATHS</span>
+      </div>
+      <span class="project-emoji">🌍</span>
+      <div class="project-meta">Project — 03 · Individual · Global dataset</div>
+      <h3 class="project-title">COVID-19 Global Pandemic Analysis</h3>
+      <p class="project-problem">
+        A multi-page Power BI report examining the full COVID-19 pandemic trajectory across 200+ countries using the Our World in Data dataset. The report answered 10 research questions covering ~7M total deaths, ~779M confirmed cases, ~154K new deaths, and ~21M new cases. Key insights include 2022 as the peak transmission year, 2021 as the peak mortality year (Delta variant), Asia as the highest reproduction-rate continent, the United States leading in total cases, and a strong GDP per capita correlation with faster national response. The project showcased complete data modelling with before-and-after screenshots, a data model diagram, and a story-driven multi-page report with page navigation links.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">Power BI</span>
+        <span class="project-tag">DAX</span>
+        <span class="project-tag">Data Modelling</span>
+        <span class="project-tag">Public Health</span>
+        <span class="project-tag">Narrative Reporting</span>
+        <span class="project-tag">Page Navigation</span>
+      </div>
+      <div class="project-links">
+        <span class="project-link project-link-muted">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+          Power BI Report · Private File
+        </span>
+      </div>
+    </div>
+
+    <!-- P4: ML Capstone -->
+    <div class="project-card reveal">
+      <div class="project-card-header">
+        <span class="project-badge pb-purple">Machine Learning · Capstone</span>
+        <span class="badge-stat" style="color:#b77fff">ACCURACY: 59.1% · F1: 0.59</span>
+      </div>
+      <span class="project-emoji">🧠</span>
+      <div class="project-meta">Project — 04 · Collaborative · 50,000 records</div>
+      <h3 class="project-title">Screen Time &amp; Stress Level Predictor</h3>
+      <p class="project-problem">
+        A supervised learning capstone completed at TS Academy (Group 5), investigating whether smartphone usage habits can predict stress levels. Working with a 50,000-record Kaggle dataset, the team performed rigorous data cleaning — removing 29.3% of records for logical inconsistencies — then feature engineering and a Random Forest binary classifier. The tuned model achieved 59.1% test accuracy (Macro F1: 0.59), substantially reducing overfitting from the baseline (100% → 85.9% train accuracy). Screen time variables dominated the feature importance: daily phone hours, social media usage, and weekly screen time collectively accounted for 38.8% of the model's predictive power. Students and under-20s showed marginally higher stress, consistent with social media pressure.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">Scikit-learn</span>
+        <span class="project-tag">Random Forest</span>
+        <span class="project-tag">Feature Engineering</span>
+        <span class="project-tag">Pandas</span>
+        <span class="project-tag">Seaborn</span>
+        <span class="project-tag">Google Colab</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/Amdape/Data-Science-Capstone-Project" target="_blank" rel="noopener" class="project-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub Repo
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ CERTIFICATIONS ══ -->
+<section class="section" id="certifications">
+  <div class="section-num">03 — Credentials</div>
+  <h2 class="section-title">Certifications &amp; Learning</h2>
+
+  <div class="certs-grid">
+    <div class="cert-card reveal">
+      <span class="cert-icon">📊</span>
+      <div class="cert-name">Data Analytics Certificate</div>
+      <div class="cert-issuer">HIIT PLC</div>
+      <span class="cert-status status-done">Completed</span>
+    </div>
+    <div class="cert-card reveal reveal-d1">
+      <span class="cert-icon">🧠</span>
+      <div class="cert-name">Data Science Programme</div>
+      <div class="cert-issuer">TS Academy</div>
+      <span class="cert-status status-done">Completed</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section class="section" id="contact">
+  <div class="contact-inner">
+    <div class="reveal">
+      <div class="section-num">04 — Contact</div>
+      <h2>Let's Build Something.</h2>
+      <p>
+        Open to data analyst, BI developer, and data science roles — as well as interesting project collaborations. If you're working on a problem that needs clear thinking applied to data, I'd love to connect.
+      </p>
+      <a href="mailto:amaodanielpelumi156@gmail.com" class="contact-email-link">
+        amaodanielpelumi156@gmail.com
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+    </div>
+
+    <div class="reveal reveal-d1">
+      <form class="contact-form" id="contactForm" novalidate>
+        <div id="formSuccess" class="form-msg"></div>
+
+        <div class="form-group">
+          <label class="form-label" for="fname">Name</label>
+          <input class="form-input" id="fname" type="text" placeholder="Your name" autocomplete="name"/>
+          <span class="form-error" id="nameErr">Please enter your name.</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="femail">Email</label>
+          <input class="form-input" id="femail" type="email" placeholder="your@email.com" autocomplete="email"/>
+          <span class="form-error" id="emailErr">Please enter a valid email.</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fmsg">Message</label>
+          <textarea class="form-textarea" id="fmsg" placeholder="Tell me about your project or opportunity..."></textarea>
+          <span class="form-error" id="msgErr">Please write a message.</span>
+        </div>
+        <button type="submit" class="form-submit" id="submitBtn">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <span>© 2026 Amao Daniel Pelumi — Lagos, Nigeria.</span>
+  <span>
+    <a href="https://linkedin.com/in/amaodanielpelumi" target="_blank" rel="noopener">LinkedIn</a>
+    &nbsp;·&nbsp;
+    <a href="https://github.com/Amdape" target="_blank" rel="noopener">GitHub</a>
+    &nbsp;·&nbsp;
+    <a href="mailto:amaodanielpelumi156@gmail.com">Email</a>
+  </span>
+</footer>
+
+<script>
+/* ── scroll reveal ── */
+const revealEls = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+revealEls.forEach(el => revealObs.observe(el));
+
+/* ── hero entrance ── */
+const heroItems = ['.hero-kicker','.hero-headline','.hero-sub','.hero-btns','.hero-stats'];
+heroItems.forEach((sel, i) => {
+  const el = document.querySelector(sel);
+  if (!el) return;
+  el.style.cssText = 'opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease';
+  setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, 200 + i * 130);
+});
+
+/* ── contact form ── */
+const form = document.getElementById('contactForm');
+const submitBtn = document.getElementById('submitBtn');
+const formSuccess = document.getElementById('formSuccess');
+
+function validate() {
+  let ok = true;
+  const name = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  const msg = document.getElementById('fmsg').value.trim();
+  const nameErr = document.getElementById('nameErr');
+  const emailErr = document.getElementById('emailErr');
+  const msgErr = document.getElementById('msgErr');
+
+  nameErr.classList.toggle('show', !name);
+  if (!name) ok = false;
+
+  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  emailErr.classList.toggle('show', !validEmail);
+  if (!validEmail) ok = false;
+
+  msgErr.classList.toggle('show', !msg);
+  if (!msg) ok = false;
+
+  return ok;
+}
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  if (!validate()) return;
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending…';
+  setTimeout(() => {
+    formSuccess.textContent = '✓ Message sent! I\'ll get back to you soon.';
+    formSuccess.className = 'form-msg success';
+    form.reset();
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send Message';
+    setTimeout(() => { formSuccess.className = 'form-msg'; }, 6000);
+  }, 1200);
+});
+</script>
+</body>
+</html>
